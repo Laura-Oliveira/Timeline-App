@@ -9,6 +9,5 @@ data class Event(val id: Int, val startDate: LocalDate, val endDate: LocalDate, 
     private val formatter = DateTimeFormatter.ofPattern("MMM dd", Locale.ENGLISH)
 
     fun getFormattedStartDate(): String = startDate.format(formatter)
-
     fun getFormattedEndDate(): String = endDate.format(formatter)
 }

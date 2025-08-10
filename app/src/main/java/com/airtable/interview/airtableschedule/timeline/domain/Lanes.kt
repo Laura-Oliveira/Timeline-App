@@ -1,7 +1,5 @@
 package com.airtable.interview.airtableschedule.timeline.domain
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import com.airtable.interview.airtableschedule.timeline.data.Event
 
 /**
@@ -9,7 +7,8 @@ import com.airtable.interview.airtableschedule.timeline.data.Event
  */
 class Lanes
 {
-    fun assignLanes(events: List<Event>): List<List<Event>> {
+    fun assignLanes(events: List<Event>): List<List<Event>>
+    {
         val lanes = mutableListOf<MutableList<Event>>()
 
         // Go through the list of events sorted by start date

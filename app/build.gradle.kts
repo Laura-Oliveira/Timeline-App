@@ -67,6 +67,7 @@ dependencies {
 
     // Material Design
     implementation(libs.androidx.compose.material3)
+    implementation(libs.androidx.foundation)
 
     // Testing
     testImplementation(libs.junit)

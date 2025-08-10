@@ -9,11 +9,8 @@ import com.airtable.interview.airtableschedule.timeline.ui.theme.AirtableSchedul
 class MainView : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         setContent {
-            AirtableScheduleTheme {
-                TimelineScreen()
-            }
+            AirtableScheduleTheme { TimelineScreen() }
         }
     }
 }
