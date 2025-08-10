@@ -7,8 +7,8 @@ import com.airtable.interview.airtableschedule.timeline.data.Event
 /**
  * Takes a list of [Event]s and assigns them to lanes based on start/end dates.
  */
-class Utils {
-    @RequiresApi(Build.VERSION_CODES.O)
+class Lanes
+{
     fun assignLanes(events: List<Event>): List<List<Event>> {
         val lanes = mutableListOf<MutableList<Event>>()
 

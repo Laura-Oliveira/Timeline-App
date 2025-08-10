@@ -1,5 +1,7 @@
 package com.airtable.interview.airtableschedule.timeline.domain
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.SharingStarted
