@@ -1,11 +1,20 @@
 package com.airtable.interview.airtableschedule.timeline.ui
 
+import android.R
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -15,13 +24,18 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.airtable.interview.airtableschedule.timeline.data.Event
 import com.airtable.interview.airtableschedule.timeline.domain.TimelineViewModel
 import com.airtable.interview.airtableschedule.timeline.ui.theme.AirtableScheduleTheme
+import androidx.compose.ui.res.painterResource
 
 /**
  * A screen that displays a timeline of events.
@@ -29,8 +43,7 @@ import com.airtable.interview.airtableschedule.timeline.ui.theme.AirtableSchedul
 @Composable
 fun TimelineScreen(
     viewModel: TimelineViewModel = viewModel()
-)
-{
+) {
     AirtableScheduleTheme {
         val uiState by viewModel.uiState.collectAsStateWithLifecycle()
         TimelineView(uiState.events)
@@ -45,22 +58,43 @@ fun TimelineScreen(
  * @param events The list of events to display.
  */
 @Composable
-private fun TimelineView(
-    events: List<Event>,
-)
+fun TimelineView(events: List<Event>)
 {
     val scrollState = rememberScrollState()
     Column(
         modifier = Modifier
             .fillMaxWidth()
             .background(MaterialTheme.colorScheme.background)
-            .padding(16.dp)
-            .verticalScroll(scrollState),
+            .verticalScroll(scrollState)
+            .padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp)
     )
     {
-        events.forEach {
-            EventView(event = it)
+        Column(
+            modifier = Modifier.fillMaxSize().padding(10.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        )
+        {
+            // Screen title
+            Text(
+                text = "Airtable Events",
+                style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.Bold),
+                maxLines = 2,
+                overflow = TextOverflow.Ellipsis,
+                color = MaterialTheme.colorScheme.surface,
+                modifier = Modifier.padding(bottom = 8.dp)
+            )
+            HorizontalDivider(
+                modifier = Modifier
+                    .width(200.dp)
+                    .height(2.dp),
+                color = MaterialTheme.colorScheme.surface
+            )
+        }
+
+        events.forEach { event ->
+            EventView(event = event)
         }
     }
 }
@@ -70,50 +104,78 @@ private fun TimelineView(
  * TODO: This needs to be updated as needed
  */
 @Composable
-private fun EventView(event: Event)
+fun EventView(event: Event)
 {
+    val barColor = MaterialTheme.colorScheme.primary
+
     Surface(
-        color = MaterialTheme.colorScheme.surface,
         shape = RoundedCornerShape(12.dp),
-        tonalElevation = 2.dp,
-        shadowElevation = 1.dp,
+        tonalElevation = 4.dp,
         modifier = Modifier.fillMaxWidth()
     )
     {
-        Column(
-            modifier = Modifier.fillMaxWidth()
-                .padding(16.dp),
-                verticalArrangement = Arrangement.spacedBy(6.dp)
+        Row(
+            modifier = Modifier
+                .background(MaterialTheme.colorScheme.onBackground)
+                .padding(12.dp),
+            verticalAlignment = Alignment.CenterVertically
         )
         {
-            Text(
-                text = event.name,
-                style = MaterialTheme.typography.titleMedium,
-                color = MaterialTheme.colorScheme.primary
+            // Image
+            Image(
+                painter = painterResource(id = R.drawable.ic_menu_my_calendar),
+                contentDescription = null,
+                modifier = Modifier
+                    .size(48.dp)
+                    .clip(RoundedCornerShape(8.dp))
             )
 
-            Row (modifier = Modifier.fillMaxWidth())
-            {
-                Text(
-                    text = "(${event.getFormattedStartDate()} - ",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.primaryContainer
+            Spacer(modifier = Modifier.width(12.dp))
 
+            // Vertical colored bar
+            Box(
+                modifier = Modifier
+                    .width(6.dp)
+                    .fillMaxHeight()
+                    .background(barColor, RoundedCornerShape(3.dp))
+            )
+
+            Spacer(modifier = Modifier.width(12.dp))
+
+            Column(modifier = Modifier.weight(1f))
+            {
+                // Dates row
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
                 )
-                if (event.startDate != event.endDate)
                 {
+                    //Start Date
                     Text(
-                        text = "${event.getFormattedEndDate()})",
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.primaryContainer
+                        text = event.getFormattedStartDate(),
+                        style = MaterialTheme.typography.labelLarge.copy(fontWeight = FontWeight.Bold),
+                        color = barColor
+                    )
+                    //End Date
+                    Text(
+                        text = event.getFormattedEndDate(),
+                        style = MaterialTheme.typography.labelLarge.copy(fontWeight = FontWeight.Bold),
+                        color = barColor
                     )
                 }
-            }
 
-            HorizontalDivider(
-                color = MaterialTheme.colorScheme.secondary,
-                thickness = 1.dp
-            )
+                Spacer(modifier = Modifier.height(4.dp))
+
+                // Event title
+                Text(
+                    text = event.name,
+                    style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold),
+                    maxLines = 2,
+                    overflow = TextOverflow.Ellipsis,
+                    color = MaterialTheme.colorScheme.surface
+                )
+            }
         }
     }
 }

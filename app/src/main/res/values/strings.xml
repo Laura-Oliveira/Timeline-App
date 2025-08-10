@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">AirtableSchedule</string>
+    <string name="txt_title"> Airtable Events </string>
 </resources>
