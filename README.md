@@ -71,7 +71,7 @@ The project focuses on composable UI components, elegant date formatting, and re
 
 ## ✅ **Testing & Future Plans**
 - Automated unit and UI tests using Jetpack Compose testing APIs (planned)
-- Allow dragging and dropping events to change their start and/or end dates
+- Allow dragging and dropping events to change their priority in case they happen on the same date
 - Support for custom images per timeline event
 - Custom filters including nearest dates and activity priorities
 
