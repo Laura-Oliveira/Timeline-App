@@ -44,8 +44,7 @@ The project focuses on composable UI components, elegant date formatting, and re
 - **Jetpack Compose** – declarative UI toolkit for Android
 - **Material 3** – modern UI components and theming
 - **LocalDate & DateTimeFormatter** – for date handling and formatting
-- **Coil** – (optionally) image loading library if using network images
-- MVVM architecture (can be extended)
+- MVVM architecture
 - Modular, clean composable functions for maintainability
 
 ---
@@ -116,3 +115,5 @@ This Timeline App demonstrates:
 ---
 
 > ⭐ *Thank you for visiting! Let’s build something impactful together!*
+
+<!-- - **Coil** – (optionally) image loading library if using network images -->
